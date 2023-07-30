@@ -1,51 +1,42 @@
 package hello.servlet.domain.member;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 class MemberRepositoryTest {
-    MemberRepository memberRepository = MemberRepository.getInstance();
 
-    @AfterEach
-    void afterEach() {
-        memberRepository.clearStore();
-    }
+  MemberRepository memberRepository = MemberRepository.getInstance();
 
-    @DisplayName("저장 확인")
-    @Test
-    void test1() {
-        // given
-        Member member = new Member("hello", 20);
+  @AfterEach
+  void afterEach() {
+    memberRepository.clearStore();
+  }
 
-        // when
-        Member savedMember = memberRepository.save(member);
+  @Test
+  void save() {
+    Member member = new Member("hello", 20);
 
-        // then
-        Member findMember = memberRepository.findById(savedMember.getId());
-        assertThat(findMember).isEqualTo(savedMember);
-    }
+    Member savedMember = memberRepository.save(member);
 
-    @DisplayName("전체 검색")
-    @Test
-    void test2() {
-        // given
-        Member member1 = new Member("jae", 20);
-        Member member2 = new Member("eun", 30);
+    Member findMember = memberRepository.findById(savedMember.getId());
+    Assertions.assertThat(findMember).isEqualTo(savedMember);
+  }
 
-        memberRepository.save(member1);
-        memberRepository.save(member2);
+  @Test
+  void findAll() {
+    Member member1 = new Member("member1", 30);
+    Member member2 = new Member("member2", 30);
 
-        // when
-        List<Member> findMembers = memberRepository.findAll();
+    memberRepository.save(member1);
+    memberRepository.save(member2);
 
-        // then
-        assertThat(findMembers.size()).isEqualTo(2);
-        assertThat(findMembers).contains(member1, member2);
+    List<Member> result = memberRepository.findAll();
 
-    }
+    org.assertj.core.api.Assertions.assertThat(result.size()).isEqualTo(2);
+    Assertions.assertThat(result).contains(member1, member2);
+  }
 }
