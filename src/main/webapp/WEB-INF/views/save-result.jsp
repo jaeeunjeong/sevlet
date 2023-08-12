@@ -7,9 +7,9 @@
 <body>
 성공
 <ul>
-    <li>id=<%=((Member)request.getAttribute("member")).getId()%></li>
-    <li>username=${member.username}></li>
-<%--    <li>age=${member.getAge}></li>--%>
+    <%--    <li>id=<%=((Member)request.getAttribute("member")).getId()%></li>--%>
+    <%--    <li>username=${member.username}</li>--%>
+    <%--    <li>age=${member.getAge}></li>--%>
 </ul>
 <a href="/index.html">메인</a>
 </body>
